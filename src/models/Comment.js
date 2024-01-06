@@ -4,8 +4,12 @@ const bcrypt = require("bcrypt");
 const Comment = new mongoose.Schema(
   {
     content: { type: String, required: true },
-    post: { type: Schema.Types.ObjectId, ref: "Blog", required: true },
-    author: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    post: { type: mongoose.Schema.Types.ObjectId, ref: "Blog", required: true },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   {
     timestamps: true,
