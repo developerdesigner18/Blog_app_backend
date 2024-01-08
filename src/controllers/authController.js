@@ -8,7 +8,9 @@ const signup = async (req, res) => {
   try {
     const existingUser = await User.findOne({ $or: [{ email }] });
     if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
+      return res
+        .status(400)
+        .json({ code: 400, success: false, message: "User already exists" });
     }
 
     const newUser = new User({
@@ -22,7 +24,12 @@ const signup = async (req, res) => {
 
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY);
 
-    res.status(201).json({ token });
+    res.status(201).json({
+      code: 200,
+      success: true,
+      message: "User signup success",
+      token,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Error creating user" });
