@@ -20,7 +20,7 @@ const signup = async (req, res) => {
       fullName,
     });
 
-    await newUser.save();
+    const addedUser = await newUser.save();
 
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY);
 
@@ -28,7 +28,7 @@ const signup = async (req, res) => {
       code: 200,
       success: true,
       message: "User signup success",
-      token,
+      data: { token, ...addedUser },
     });
   } catch (error) {
     console.log(error);
